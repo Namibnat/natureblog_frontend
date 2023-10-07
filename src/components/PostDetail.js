@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import BlogPostDate from "./BlogPostDate";
 
 function PostDetail() {
   const params = useParams();
@@ -29,6 +30,7 @@ function PostDetail() {
   return (
     <div className="blogContent">
       <h2>{post.title}</h2>
+      <BlogPostDate date_created={post.date_created} />
       <p>{post.body}</p>
     </div>
   );

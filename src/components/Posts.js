@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import BlogPostDate from "./BlogPostDate";
 
 function Posts() {
   const [posts, setPosts] = useState([]);
@@ -35,6 +36,7 @@ function Posts() {
             <a key={post.id} href={`post/${post.slug}`} className="blogCard">
               <div className="blogContent">
                 <h3>Title: {post.title}</h3>
+                <BlogPostDate date_created={post.date_created} />
                 <p>{post.body}</p>
               </div>
             </a>
