@@ -10,7 +10,7 @@ function Posts() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/posts");
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/posts`);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -60,8 +60,8 @@ function About() {
 function App() {
   return (
     <div className="App">
-      <Header />
       <Router>
+        <Header />
         <Routes>
           <Route path="/" element={<Posts />} />
           <Route path="/about" element={<About />} />
