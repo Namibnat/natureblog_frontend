@@ -2,13 +2,42 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 function Header() {
+  const [contacts, setContacts] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/api/contacts/");
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+
+        setContacts(data);
+      } catch (error) {
+        console.error(
+          "There was a problem with the fetch operation:",
+          error.message
+        );
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <header>
       <h1>Nature Blog</h1>
       <nav>
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
+        <a href="/?route=home">Home</a>
+        <a href="/?route=about">About</a>
+        {contacts.length > 0 &&
+          contacts.map((contact) => (
+            <a key={contact.key} href={contact.url}>
+              {contact.name}
+            </a>
+          ))}
       </nav>
     </header>
   );
@@ -18,7 +47,6 @@ function Posts() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    // Define an async function
     const fetchData = async () => {
       try {
         // Fetch the list of posts from the backend
@@ -42,9 +70,8 @@ function Posts() {
       }
     };
 
-    // Call the async function
     fetchData();
-  }, []); // Empty dependency array means this useEffect runs once when the component mounts
+  }, []);
 
   return (
     <>
@@ -55,7 +82,7 @@ function Posts() {
           <h2>No blog posts have been posted yet.</h2>
         ) : (
           posts.map((post) => (
-            <a href="{post.slug}" className="blogCard">
+            <a href={post.slug} className="blogCard">
               <div className="blogContent">
                 <h3>Title: {post.title}</h3>
                 <p>{post.body}</p>
