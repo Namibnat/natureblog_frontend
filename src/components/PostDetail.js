@@ -27,6 +27,9 @@ function PostDetail() {
 
     fetchData();
   }, [params.slug]);
+  if (!post) {
+    return <div>Post not found!</div>;
+  }
   return (
     <div className="blogContent">
       <h2>{post.title}</h2>
